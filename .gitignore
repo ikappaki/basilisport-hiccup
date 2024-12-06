@@ -12,3 +12,10 @@ pom.xml.asc
 .clj-kondo/*
 !.clj-kondo/config.edn
 /.cpcache
+
+/.venv
+dist/
+__pycache__/
+*~
+#*
+

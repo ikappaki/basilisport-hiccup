@@ -1,8 +1,8 @@
-(ns hiccup.compiler-test
+(ns test.hiccup.compiler-test
   (:require [clojure.test :refer :all]
             [clojure.walk :as walk]
-            [hiccup2.core :refer [html]])
-  (:import (hiccup.util RawString)))
+            [hiccup2.core :refer [html]]
+            [hiccup.util :refer [RawString]]))
 
 (defn- extract-strings [code]
   (->> (tree-seq coll? seq code)

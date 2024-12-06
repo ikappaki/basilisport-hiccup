@@ -1,4 +1,4 @@
-(ns hiccup2.optimizations-test
+(ns test.hiccup2.optimizations-test
   (:require [clojure.test :refer :all]
             [clojure.walk :as walk]
             [hiccup2.core :as h]))

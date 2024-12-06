@@ -4,7 +4,8 @@ version = "0.1.0b1"
 description = ""
 authors = ["ikappaki <ikappaki@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "hiccup", from = "src"}]
+packages = [{include = "hiccup", from = "src"},
+            {include = "hiccup2", from = "src"}]
 
 
 [tool.poetry.dependencies]

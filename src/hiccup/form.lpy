@@ -127,7 +127,7 @@
       (form-to [:put \"/post\"]
         ...)"
   [[method action] & body]
-  (let [method-str (.toUpperCase (name method))
+  (let [method-str (.upper (name method))
         action-uri (util/to-uri action)]
     (-> (if (contains? #{:get :post} method)
           [:form {:method method-str, :action action-uri}]

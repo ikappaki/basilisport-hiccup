@@ -37,4 +37,5 @@
   [name & fdecl]
   `(do (defn ~name ~@fdecl)
        (alter-meta! (var ~name) update-in [:arglists] #'update-arglists)
+       (alter-meta! (var ~name) assoc :redef true)
        (alter-var-root (var ~name) wrap-attrs)))

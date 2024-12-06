@@ -1,4 +1,4 @@
-(ns hiccup.form_test
+(ns test.hiccup.form-test
   (:require [clojure.test :refer :all]
             [hiccup.core :refer [html]]
             [hiccup.form :refer :all]))

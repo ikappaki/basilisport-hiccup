@@ -1,3 +1,22 @@
+> [!NOTE]
+> [![Basilisp tests](https://github.com/ikappaki/basilisport-hiccup/actions/workflows/tests-run.yml/badge.svg)](https://github.com/ikappaki/basilisport-hiccup/actions/workflows/tests-run.yml)
+>
+> This is an experimental port of the [hiccup](https://github.com/weavejester/hiccup) library `v2.0.0-RC3` by @weavejester to [Basilisp](https://basilisp.readthedocs.io/en/latest/).
+>
+> The library is fully ported alongs with all its tests[^1], showcasing Basilisp's strong compatibility with Clojure.
+>
+> To install
+> ```shell
+> pip install ...
+> ```
+>
+> The purpose of this port was to evaluate the effort required to port a Clojure library to Basilisp with minimal changes.
+>
+> Performance is likely to be much worse that Clojure's runtime, as no effort has been made to optimise it (yet?).
+>
+> Original hiccup `README.md` content follows.
+> [^1]: Except for the [sorted-map](https://github.com/basilisp-lang/basilisp/issues/416) test and another test that uses [pre/post conditions](https://github.com/basilisp-lang/basilisp/issues/1167), which are not yet supported in Basilisp.
+
 # Hiccup [![Build Status](https://github.com/weavejester/hiccup/actions/workflows/test.yml/badge.svg)](https://github.com/weavejester/hiccup/actions/workflows/test.yml)
 
 Hiccup is a library for representing HTML in Clojure. It uses vectors

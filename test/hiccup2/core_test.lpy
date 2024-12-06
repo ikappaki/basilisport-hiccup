@@ -1,7 +1,8 @@
-(ns hiccup2.core_test
+(ns test.hiccup2.core-test
   (:require [clojure.test :refer :all]
             [hiccup2.core :refer :all]
-            [hiccup.util :as util]))
+            [hiccup.util :as util])
+  (:import numbers))
 
 (deftest return-types
   (testing "html returns a RawString"
@@ -53,7 +54,7 @@
   (testing "keywords are turned into strings"
     (is (= (str (html [:div :foo])) "<div>foo</div>")))
   (testing "vecs don't expand - error if vec doesn't have tag name"
-    (is (thrown? IllegalArgumentException
+    (is (thrown? TypeError
                  (html (vector [:p "a"] [:p "b"])))))
   (testing "tags can contain tags"
     (is (= (str (html [:div [:p]])) "<div><p></p></div>"))
@@ -126,7 +127,7 @@
              "<span style=\"background-color:blue;color:red;\">foo</span>"))))
   (testing "type hints"
     (let [string "x"]
-      (is (= (str (html [:span ^String string])) "<span>x</span>"))))
+      (is (= (str (html [:span ^python/str string])) "<span>x</span>"))))
   (testing "optimized forms"
     (is (= (str (html [:ul (for [n (range 3)]
                              [:li n])]))
@@ -167,11 +168,11 @@
   (testing "literals"
     (is (= (str (html "<>")) "&lt;&gt;"))
     (is (= (str (html :<>)) "&lt;&gt;"))
-    (is (= (str (html ^String (str "<>"))) "&lt;&gt;"))
+    (is (= (str (html ^python/str (str "<>"))) "&lt;&gt;"))
     (is (= (str (html {} {"<a>" "<b>"})) "{&quot;&lt;a&gt;&quot; &quot;&lt;b&gt;&quot;}"))
     (is (= (str (html #{"<>"})) "#{&quot;&lt;&gt;&quot;}"))
     (is (= (str (html 1)) "1"))
-    (is (= (str (html ^Number (+ 1 1))) "2")))
+    (is (= (str (html ^numbers/Number (+ 1 1))) "2")))
   (testing "non-literals"
     (is (= (str (html (list [:p "<foo>"] [:p "<bar>"])))
            "<p>&lt;foo&gt;</p><p>&lt;bar&gt;</p>"))

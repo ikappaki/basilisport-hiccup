@@ -1,4 +1,4 @@
-(ns hiccup.core-test
+(ns test.hiccup.core-test
   (:require [clojure.test :refer :all]
             [hiccup.core :refer :all]))
 
@@ -46,7 +46,7 @@
   (testing "keywords are turned into strings"
     (is (= (html [:div :foo]) "<div>foo</div>")))
   (testing "vecs don't expand - error if vec doesn't have tag name"
-    (is (thrown? IllegalArgumentException
+    (is (thrown? TypeError
                  (html (vector [:p "a"] [:p "b"])))))
   (testing "tags can contain tags"
     (is (= (html [:div [:p]]) "<div><p></p></div>"))
@@ -116,7 +116,7 @@
            "<div id=\"ab\">foo</div>")))
   (testing "type hints"
     (let [string "x"]
-      (is (= (html [:span ^String string]) "<span>x</span>"))))
+      (is (= (html [:span ^python/str string]) "<span>x</span>"))))
   (testing "optimized forms"
     (is (= (html [:ul (for [n (range 3)]
                         [:li n])])

@@ -1,4 +1,4 @@
-(ns hiccup.middleware_test
+(ns test.hiccup.middleware-test
   (:require [clojure.test :refer :all]
             [hiccup.core :refer [html]]
             [hiccup.element :refer [link-to]]

@@ -1,8 +1,8 @@
 (ns hiccup.util
   "Utility functions for Hiccup."
   (:require [clojure.string :as str])
-  (:import java.net.URI
-           java.net.URLEncoder))
+  (:import fractions
+           urllib.parse))
 
 (def ^:dynamic ^:no-doc *html-mode* :xhtml)
 
@@ -21,48 +21,49 @@
      ~@body))
 
 (defprotocol ToString
-  (^String to-str [x] "Convert a value into a string."))
+  (^python/str to-str [x] "Convert a value into a string."))
 
 (extend-protocol ToString
-  clojure.lang.Keyword
+  basilisp.lang.keyword/Keyword
   (to-str [k] (name k))
-  clojure.lang.Ratio
+  fractions/Fraction
   (to-str [r] (str (float r)))
-  java.net.URI
+  urllib.parse/ParseResult
   (to-str [u]
-    (if (or (.getHost u)
-            (nil? (.getPath u))
-            (not (-> (.getPath u) (.startsWith "/"))))
-      (str u)
+    (if (or (.-hostname u)
+            (nil? (.-path u))
+            (not (-> (.-path u) (.startswith "/"))))
+      (str (.geturl u))
       (let [base (str *base-url*)]
-        (if (.endsWith base "/")
-          (str (subs base 0 (dec (count base))) u)
-          (str base u)))))
-  Object
+        (if (.endswith base "/")
+          (str (subs base 0 (dec (count base))) (.geturl u))
+          (str base (.geturl u))))))
+  python/object
   (to-str [x] (str x))
   nil
   (to-str [_] ""))
 
-(defn ^String as-str
+(defn ^python/str as-str
   "Converts its arguments into a string using [[to-str]]."
   [& xs]
   (apply str (map to-str xs)))
 
 (defprotocol ToURI
-  (^java.net.URI to-uri [x] "Convert a value into a URI."))
+  (^urllib.parse/ParseResult to-uri [x] "Convert a value into a URI."))
 
 (extend-protocol ToURI
-  java.net.URI
+  urllib.parse/ParseResult
   (to-uri [u] u)
-  String
-  (to-uri [s] (URI. s)))
+  python/str
+  (to-uri [s] (urllib.parse/urlparse s)))
 
-(deftype RawString [^String s]
-  Object
-  (^String toString [this] s)
-  (^boolean equals [this other]
+(deftype RawString [^python/str s]
+  (^python/str __str__ [this] s)
+  (^python/str __repr__ [this] s)
+  (__hash__ [this] (.__hash__ s))
+  (^boolean __eq__ [this other]
     (and (instance? RawString other)
-         (= s  (.toString other)))))
+         (= s  (str other)))))
 
 (defn raw-string
   "Converts one or more strings into an object that will not be escaped when
@@ -97,14 +98,14 @@
   (url-encode [x] "Turn a value into a URL-encoded string."))
 
 (extend-protocol URLEncode
-  String
-  (url-encode [s] (URLEncoder/encode ^String s ^String *encoding*))
-  java.util.Map
+  python/str
+  (url-encode [s] (urllib.parse/quote-plus (.encode s *encoding*)))
+  basilisp.lang.interfaces/IAssociative
   (url-encode [m]
     (str/join "&"
       (for [[k v] m]
         (str (url-encode k) "=" (url-encode v)))))
-  Object
+  python/object
   (url-encode [x] (url-encode (to-str x)))
   nil
   (url-encode [x] ""))
