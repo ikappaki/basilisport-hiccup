@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "hiccup"
+version = "0.1.0b1"
+description = ""
+authors = ["ikappaki <ikappaki@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "hiccup", from = "src"}]
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+basilisp = {git = "https://github.com/basilisp-lang/basilisp.git", rev = "f84204c4357d4c0307afa8c0e0139b32b2c305c0"}
+pytest = "^8.3.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
