@@ -7,7 +7,16 @@
 >
 > To install
 > ```shell
-> pip install ...
+> pip install https://github.com/ikappaki/basilisport-hiccup/releases/download/v0.1.0b1/hiccup-0.1.0b1-py3-none-any.whl
+> ```
+>
+> Usage
+> ```clojure
+> > basilisp repl
+> basilisp.user=> (require '[hiccup2.core :as h])
+> nil
+> basilisp.user=> (str (h/html [:span {:class "foo"} "bar"]))
+> "<span class=\"foo\">bar</span>"
 > ```
 >
 > The purpose of this port was to evaluate the effort required to port a Clojure library to Basilisp with minimal changes.
